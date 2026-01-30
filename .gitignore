@@ -1,0 +1,38 @@
+# Unity-specific folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+# Memory captures and recordings
+[Mm]emoryCaptures/
+[Rr]ecordings/
+# Asset meta files (only ignore if the asset itself is ignored)
+!/[Aa]ssets/**/*.meta
+# Visual Studio and JetBrains Rider files
+vs/
+[Aa]ssets/Plugins/Editor/JetBrains*
+# Gradle and other build-related files
+gradle/
+ExportedObj/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+# Unity crash reports and logs
+sysinfo.txt
+mono_crash.*
+# Build outputs
+*.apk
+*.aab
+*.unitypackage
+# Addressables and Visual Scripting auto-generated files
+[Aa]ssets/AddressableAssetsData/*.bin*
+[Aa]ssets/Unity.VisualScripting.Generated/
+# TestRunner auto-generated scenes
+[Aa]ssets/InitTestScene*.unity*
