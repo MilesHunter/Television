@@ -15,7 +15,7 @@ MonoBehaviour:
   filterType: 0
   filterColor: {r: 1, g: 0, b: 0, a: 0.3529412}
   filterRadius: 2
-  filterVisualPrefab: {fileID: 0}
+  filterVisualPrefab: {fileID: 5418161775059417041, guid: 7f256f5e6a6e0a648a3f06deed73cfeb, type: 3}
   filterParticles: {fileID: 0}
   pickupSound: {fileID: 0}
   activateSound: {fileID: 0}

@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "G:\\UnityProject\\Television\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|G:\\UnityProject\\Television\\assets\\script\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|g:\\unityproject\\television\\assets\\script\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|g:\\unityproject\\television\\assets\\script\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|g:\\unityproject\\television\\assets\\script\\filtersystemperformanceoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\filtersystemperformanceoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|G:\\UnityProject\\Television\\assets\\script\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -34,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,7 +46,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "FilterSystemPerformanceOptimizer.cs",
+              "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\FilterSystemPerformanceOptimizer.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\FilterSystemPerformanceOptimizer.cs",
+              "ToolTip": "G:\\UnityProject\\Television\\Assets\\Script\\FilterSystemPerformanceOptimizer.cs",
+              "RelativeToolTip": "Assets\\Script\\FilterSystemPerformanceOptimizer.cs",
+              "ViewState": "AgIAAFUBAAAAAAAAAAD4v18BAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-31T02:03:16.896Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "FilterController.cs",
               "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\FilterController.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\FilterController.cs",
@@ -54,7 +71,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "FilterEffectData.cs",
               "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\FilterEffectData.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\FilterEffectData.cs",
@@ -66,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "FilterSystemManager.cs",
               "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\FilterSystemManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\FilterSystemManager.cs",
@@ -78,7 +95,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "GameManager.cs",
               "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\GameManager.cs",
@@ -86,8 +103,7 @@
               "RelativeToolTip": "Assets\\Script\\GameManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-30T16:49:28.056Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-30T16:49:28.056Z"
             },
             {
               "$type": "Document",
@@ -97,14 +113,14 @@
               "RelativeDocumentMoniker": "Assets\\Script\\PlayerController.cs",
               "ToolTip": "G:\\UnityProject\\Television\\Assets\\Script\\PlayerController.cs",
               "RelativeToolTip": "Assets\\Script\\PlayerController.cs",
-              "ViewState": "AgIAAG4AAAAAAAAAAAAiwHoAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAwD4AAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-30T15:36:02.78Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Mask.shader",
               "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Shader\\Mask.shader",
               "RelativeDocumentMoniker": "Assets\\Shader\\Mask.shader",
