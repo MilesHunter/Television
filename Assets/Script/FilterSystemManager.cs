@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,10 @@ public class FilterSystemManager : MonoBehaviour
 {
     [Header("System Settings")]
     public LayerMask revealableObjectLayer = 1;
+
+    [Header("Real-time Update Settings")]
+    public bool enableRealTimeUpdates = true;
+    public float updateInterval = 0.15f;
 
     // 单例模式
     public static FilterSystemManager Instance { get; private set; }
@@ -15,6 +20,17 @@ public class FilterSystemManager : MonoBehaviour
 
     // 滤镜效果缓存
     private Dictionary<Vector2Int, int> filterEffectMap = new Dictionary<Vector2Int, int>();
+
+    // 实时更新系统
+    private Coroutine updateCoroutine;
+    private bool isRealTimeUpdateEnabled = true;
+
+    // 事件系统
+    public System.Action OnFilterEffectsUpdated;
+    public System.Action<FilterController> OnFilterRegistered;
+    public System.Action<FilterController> OnFilterUnregistered;
+    public System.Action<RevealableObject> OnRevealableObjectRegistered;
+    public System.Action<RevealableObject> OnRevealableObjectUnregistered;
 
     void Awake()
     {
@@ -35,7 +51,117 @@ public class FilterSystemManager : MonoBehaviour
     {
         // 初始化时找到所有可显示物体
         RefreshRevealableObjects();
+
+        // 启动实时更新协程
+        if (enableRealTimeUpdates)
+        {
+            StartRealTimeUpdates();
+        }
     }
+
+    void OnDestroy()
+    {
+        // 停止实时更新协程
+        StopRealTimeUpdates();
+    }
+
+    #region 实时更新系统
+
+    /// <summary>
+    /// 启动实时更新协程
+    /// </summary>
+    public void StartRealTimeUpdates()
+    {
+        if (updateCoroutine == null && isRealTimeUpdateEnabled && enableRealTimeUpdates)
+        {
+            updateCoroutine = StartCoroutine(RealTimeUpdateCoroutine());
+            Debug.Log("[FilterSystemManager] Real-time updates started");
+        }
+    }
+
+    /// <summary>
+    /// 停止实时更新协程
+    /// </summary>
+    public void StopRealTimeUpdates()
+    {
+        if (updateCoroutine != null)
+        {
+            StopCoroutine(updateCoroutine);
+            updateCoroutine = null;
+            Debug.Log("[FilterSystemManager] Real-time updates stopped");
+        }
+    }
+
+    /// <summary>
+    /// 实时更新协程
+    /// </summary>
+    private IEnumerator RealTimeUpdateCoroutine()
+    {
+        while (isRealTimeUpdateEnabled && enableRealTimeUpdates)
+        {
+            yield return new WaitForSeconds(updateInterval);
+            CheckForFilterPositionChanges();
+        }
+    }
+
+    /// <summary>
+    /// 检查滤镜位置变化
+    /// </summary>
+    private void CheckForFilterPositionChanges()
+    {
+        bool hasAnyFilterMoved = false;
+
+        foreach (FilterController filter in activeFilters)
+        {
+            if (filter != null && filter.HasPositionChanged())
+            {
+                hasAnyFilterMoved = true;
+                filter.ResetPositionTracking();
+            }
+        }
+
+        if (hasAnyFilterMoved)
+        {
+            UpdateFilterEffects();
+        }
+    }
+
+    /// <summary>
+    /// 设置实时更新启用状态
+    /// </summary>
+    public void SetRealTimeUpdatesEnabled(bool enabled)
+    {
+        if (enableRealTimeUpdates != enabled)
+        {
+            enableRealTimeUpdates = enabled;
+
+            if (enabled)
+            {
+                StartRealTimeUpdates();
+            }
+            else
+            {
+                StopRealTimeUpdates();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 设置更新间隔
+    /// </summary>
+    public void SetUpdateInterval(float interval)
+    {
+        updateInterval = Mathf.Max(0.05f, interval);
+
+        // 重启协程以应用新的间隔
+        if (updateCoroutine != null)
+        {
+            StopRealTimeUpdates();
+            StartRealTimeUpdates();
+        }
+    }
+
+    #endregion
 
     #region 滤镜管理
 
@@ -44,7 +170,9 @@ public class FilterSystemManager : MonoBehaviour
         if (!activeFilters.Contains(filter))
         {
             activeFilters.Add(filter);
+            OnFilterRegistered?.Invoke(filter);
             UpdateFilterEffects();
+            Debug.Log($"[FilterSystemManager] Filter registered: {filter.name}");
         }
     }
 
@@ -52,7 +180,9 @@ public class FilterSystemManager : MonoBehaviour
     {
         if (activeFilters.Remove(filter))
         {
+            OnFilterUnregistered?.Invoke(filter);
             UpdateFilterEffects();
+            Debug.Log($"[FilterSystemManager] Filter unregistered: {filter.name}");
         }
     }
 
@@ -72,6 +202,9 @@ public class FilterSystemManager : MonoBehaviour
 
         // 更新所有可显示物体的状态
         UpdateRevealableObjects();
+
+        // 触发事件通知遮罩系统更新
+        OnFilterEffectsUpdated?.Invoke();
     }
 
     private void AddFilterEffectToMap(FilterController filter)
@@ -121,12 +254,22 @@ public class FilterSystemManager : MonoBehaviour
         if (!revealableObjects.Contains(obj))
         {
             revealableObjects.Add(obj);
+            OnRevealableObjectRegistered?.Invoke(obj);
+
+            // 立即更新新注册的物体状态
+            UpdateSingleRevealableObject(obj);
+
+            Debug.Log($"[FilterSystemManager] RevealableObject registered: {obj.name}");
         }
     }
 
     public void UnregisterRevealableObject(RevealableObject obj)
     {
-        revealableObjects.Remove(obj);
+        if (revealableObjects.Remove(obj))
+        {
+            OnRevealableObjectUnregistered?.Invoke(obj);
+            Debug.Log($"[FilterSystemManager] RevealableObject unregistered: {obj.name}");
+        }
     }
 
     public void RefreshRevealableObjects()
@@ -134,6 +277,8 @@ public class FilterSystemManager : MonoBehaviour
         revealableObjects.Clear();
         RevealableObject[] objects = FindObjectsOfType<RevealableObject>();
         revealableObjects.AddRange(objects);
+
+        Debug.Log($"[FilterSystemManager] Refreshed {revealableObjects.Count} RevealableObjects");
     }
 
     private void UpdateRevealableObjects()
@@ -164,6 +309,16 @@ public class FilterSystemManager : MonoBehaviour
         // 检查物体是否应该被显示
         bool shouldReveal = obj.ShouldReveal(currentEffect);
         obj.SetRevealed(shouldReveal);
+
+        // 如果物体使用精确遮罩模式，通知其更新遮罩
+        if (obj.GetComponent<FilterMaskRenderer>() != null)
+        {
+            var maskRenderer = obj.GetComponent<FilterMaskRenderer>();
+            if (maskRenderer.IsMaskingEnabled)
+            {
+                maskRenderer.RequestMaskUpdate();
+            }
+        }
     }
 
     #endregion
@@ -191,6 +346,92 @@ public class FilterSystemManager : MonoBehaviour
         return new List<FilterController>(activeFilters);
     }
 
+    public List<RevealableObject> GetRevealableObjects()
+    {
+        return new List<RevealableObject>(revealableObjects);
+    }
+
+    /// <summary>
+    /// 获取指定区域内的滤镜效果
+    /// </summary>
+    public Dictionary<Vector2Int, int> GetFilterEffectsInBounds(Bounds bounds)
+    {
+        Dictionary<Vector2Int, int> effectsInBounds = new Dictionary<Vector2Int, int>();
+
+        int minX = Mathf.FloorToInt(bounds.min.x);
+        int maxX = Mathf.CeilToInt(bounds.max.x);
+        int minY = Mathf.FloorToInt(bounds.min.y);
+        int maxY = Mathf.CeilToInt(bounds.max.y);
+
+        for (int x = minX; x <= maxX; x++)
+        {
+            for (int y = minY; y <= maxY; y++)
+            {
+                Vector2Int gridKey = new Vector2Int(x, y);
+                if (filterEffectMap.ContainsKey(gridKey))
+                {
+                    effectsInBounds[gridKey] = filterEffectMap[gridKey];
+                }
+            }
+        }
+
+        return effectsInBounds;
+    }
+
+    /// <summary>
+    /// 强制更新所有遮罩渲染器
+    /// </summary>
+    public void ForceUpdateAllMasks()
+    {
+        foreach (RevealableObject obj in revealableObjects)
+        {
+            if (obj != null)
+            {
+                var maskRenderer = obj.GetComponent<FilterMaskRenderer>();
+                if (maskRenderer != null && maskRenderer.IsMaskingEnabled)
+                {
+                    maskRenderer.ForceUpdateMask();
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 获取系统性能统计信息
+    /// </summary>
+    public string GetSystemPerformanceInfo()
+    {
+        string info = "=== Filter System Performance ===\n";
+        info += $"Active Filters: {activeFilters.Count}\n";
+        info += $"Revealable Objects: {revealableObjects.Count}\n";
+        info += $"Filter Effect Map Size: {filterEffectMap.Count}\n";
+        info += $"Real-time Updates: {(enableRealTimeUpdates ? "Enabled" : "Disabled")}\n";
+        info += $"Update Interval: {updateInterval:F2}s\n";
+
+        // 统计遮罩渲染器
+        int maskRendererCount = 0;
+        int activeMaskCount = 0;
+        foreach (RevealableObject obj in revealableObjects)
+        {
+            if (obj != null)
+            {
+                var maskRenderer = obj.GetComponent<FilterMaskRenderer>();
+                if (maskRenderer != null)
+                {
+                    maskRendererCount++;
+                    if (maskRenderer.IsMaskingEnabled)
+                    {
+                        activeMaskCount++;
+                    }
+                }
+            }
+        }
+
+        info += $"Mask Renderers: {maskRendererCount} (Active: {activeMaskCount})\n";
+
+        return info;
+    }
+
     #endregion
 
     #region 调试功能
@@ -206,7 +447,36 @@ public class FilterSystemManager : MonoBehaviour
                 Vector2 worldPos = new Vector2(kvp.Key.x, kvp.Key.y);
                 Gizmos.DrawWireCube(worldPos, Vector3.one * 0.8f);
             }
+
+            // 绘制实时更新状态指示器
+            if (enableRealTimeUpdates && updateCoroutine != null)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(transform.position, 1.0f);
+            }
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (Application.isPlaying)
+        {
+            // 显示系统统计信息
+            #if UNITY_EDITOR
+            Vector3 labelPos = transform.position + Vector3.up * 2.0f;
+            string systemInfo = GetSystemPerformanceInfo();
+            UnityEditor.Handles.Label(labelPos, systemInfo);
+            #endif
+        }
+    }
+
+    /// <summary>
+    /// 在控制台输出系统状态（用于调试）
+    /// </summary>
+    [System.Diagnostics.Conditional("UNITY_EDITOR")]
+    public void LogSystemStatus()
+    {
+        Debug.Log(GetSystemPerformanceInfo());
     }
 
     #endregion

@@ -6,9 +6,18 @@ public class RevealableObject : MonoBehaviour
     [SerializeField] private FilterType requiredFilters = FilterType.Red;
     [SerializeField] private bool requireAllFilters = true; // true = AND logic, false = OR logic
 
+    [Header("Rendering Mode")]
+    [SerializeField] private RevealRenderingMode renderingMode = RevealRenderingMode.Transparency;
+    [SerializeField] private bool autoSetupMaskRenderer = true;
+
     [Header("Visual Settings")]
     [SerializeField] private float revealTransitionSpeed = 5f;
     [SerializeField] private AnimationCurve revealCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+    [Header("Masking Settings")]
+    [SerializeField] private int maskResolution = 256;
+    [SerializeField] private bool enableMaskLOD = true;
+    [SerializeField] private float maskUpdateInterval = 0.2f;
 
     [Header("Collision Settings")]
     [SerializeField] private bool disableCollisionWhenHidden = true;
@@ -25,6 +34,7 @@ public class RevealableObject : MonoBehaviour
     private SpriteRenderer[] spriteRenderers;
     private Collider2D[] colliders;
     private Renderer[] renderers;
+    private FilterMaskRenderer maskRenderer;
 
     // Original values
     private Color[] originalColors;
@@ -32,11 +42,14 @@ public class RevealableObject : MonoBehaviour
 
     // Events
     public System.Action<bool> OnRevealStateChanged;
+    public System.Action<RevealRenderingMode> OnRenderingModeChanged;
 
     // Properties
     public bool IsRevealed => isRevealed;
     public float RevealAmount => currentRevealAmount;
-    public FilterType RequiredFilters => requiredFilters;
+    public int RequiredFilters => (int)requiredFilters;
+    public bool RequireAllFilters => requireAllFilters;
+    public RevealRenderingMode RenderingMode => renderingMode;
 
     void Awake()
     {
@@ -45,6 +58,9 @@ public class RevealableObject : MonoBehaviour
 
         // Store original values
         StoreOriginalValues();
+
+        // Setup mask renderer if needed
+        SetupMaskRenderer();
     }
 
     void Start()
@@ -57,6 +73,9 @@ public class RevealableObject : MonoBehaviour
 
         // Set initial state
         SetInitialState();
+
+        // Initialize rendering mode
+        ApplyRenderingMode();
     }
 
     void OnDestroy()
@@ -87,6 +106,54 @@ public class RevealableObject : MonoBehaviour
 
         // Get all renderers (including children)
         renderers = GetComponentsInChildren<Renderer>();
+    }
+
+    void SetupMaskRenderer()
+    {
+        if (renderingMode == RevealRenderingMode.PreciseMask && autoSetupMaskRenderer)
+        {
+            // Add FilterMaskRenderer component if not present
+            maskRenderer = GetComponent<FilterMaskRenderer>();
+            if (maskRenderer == null)
+            {
+                maskRenderer = gameObject.AddComponent<FilterMaskRenderer>();
+            }
+
+            // Configure mask renderer settings
+            if (maskRenderer != null)
+            {
+                maskRenderer.SetMaskResolution(maskResolution);
+                maskRenderer.SetPreciseMaskingEnabled(true);
+            }
+        }
+    }
+
+    void ApplyRenderingMode()
+    {
+        switch (renderingMode)
+        {
+            case RevealRenderingMode.Transparency:
+                // Disable mask renderer if present
+                if (maskRenderer != null)
+                {
+                    maskRenderer.SetPreciseMaskingEnabled(false);
+                }
+                break;
+
+            case RevealRenderingMode.PreciseMask:
+                // Enable mask renderer
+                if (maskRenderer != null)
+                {
+                    maskRenderer.SetPreciseMaskingEnabled(true);
+                }
+                else if (autoSetupMaskRenderer)
+                {
+                    SetupMaskRenderer();
+                }
+                break;
+        }
+
+        OnRenderingModeChanged?.Invoke(renderingMode);
     }
 
     void StoreOriginalValues()
@@ -140,10 +207,17 @@ public class RevealableObject : MonoBehaviour
             targetRevealAmount = revealed ? 1f : 0f;
             isTransitioning = true;
 
+            // Handle different rendering modes
+            if (renderingMode == RevealRenderingMode.PreciseMask && maskRenderer != null)
+            {
+                // For precise mask mode, force update the mask
+                maskRenderer.ForceUpdateMask();
+            }
+
             // Invoke event
             OnRevealStateChanged?.Invoke(revealed);
 
-            Debug.Log($"{name} reveal state changed to: {revealed}");
+            Debug.Log($"{name} reveal state changed to: {revealed} (Mode: {renderingMode})");
         }
     }
 
@@ -262,6 +336,104 @@ public class RevealableObject : MonoBehaviour
         revealTransitionSpeed = speed;
     }
 
+    /// <summary>
+    /// 切换渲染模式
+    /// </summary>
+    public void SetRenderingMode(RevealRenderingMode mode)
+    {
+        if (renderingMode != mode)
+        {
+            renderingMode = mode;
+            ApplyRenderingMode();
+        }
+    }
+
+    /// <summary>
+    /// 设置遮罩分辨率
+    /// </summary>
+    public void SetMaskResolution(int resolution)
+    {
+        maskResolution = Mathf.Clamp(resolution, 32, 1024);
+
+        if (maskRenderer != null)
+        {
+            maskRenderer.SetMaskResolution(maskResolution);
+        }
+    }
+
+    /// <summary>
+    /// 启用/禁用遮罩LOD
+    /// </summary>
+    public void SetMaskLODEnabled(bool enabled)
+    {
+        enableMaskLOD = enabled;
+        // LOD设置会在FilterMaskRenderer中自动处理
+    }
+
+    /// <summary>
+    /// 设置遮罩更新间隔
+    /// </summary>
+    public void SetMaskUpdateInterval(float interval)
+    {
+        maskUpdateInterval = Mathf.Max(0.05f, interval);
+        // 更新间隔会在FilterMaskRenderer中使用
+    }
+
+    /// <summary>
+    /// 强制更新遮罩（仅在精确遮罩模式下有效）
+    /// </summary>
+    public void ForceUpdateMask()
+    {
+        if (renderingMode == RevealRenderingMode.PreciseMask && maskRenderer != null)
+        {
+            maskRenderer.ForceUpdateMask();
+        }
+    }
+
+    /// <summary>
+    /// 获取物体边界（供外部系统使用）
+    /// </summary>
+    public Bounds GetBounds()
+    {
+        Bounds bounds = new Bounds(transform.position, Vector3.one);
+
+        if (renderers.Length > 0)
+        {
+            bounds = renderers[0].bounds;
+            foreach (Renderer renderer in renderers)
+            {
+                bounds.Encapsulate(renderer.bounds);
+            }
+        }
+
+        return bounds;
+    }
+
+    /// <summary>
+    /// 获取遮罩渲染器组件
+    /// </summary>
+    public FilterMaskRenderer GetMaskRenderer()
+    {
+        return maskRenderer;
+    }
+
+    /// <summary>
+    /// 获取性能统计信息
+    /// </summary>
+    public string GetPerformanceInfo()
+    {
+        string info = $"Rendering Mode: {renderingMode}\n";
+        info += $"Revealed: {isRevealed} ({currentRevealAmount:F2})\n";
+        info += $"Required Filters: {requiredFilters} ({(requireAllFilters ? "AND" : "OR")})\n";
+
+        if (maskRenderer != null)
+        {
+            info += $"Mask Renderer: {maskRenderer.GetPerformanceStats()}";
+        }
+
+        return info;
+    }
+
     #endregion
 
     #region Debug
@@ -274,6 +446,13 @@ public class RevealableObject : MonoBehaviour
 
         Bounds bounds = GetBounds();
         Gizmos.DrawCube(bounds.center, bounds.size);
+
+        // Draw rendering mode indicator
+        if (renderingMode == RevealRenderingMode.PreciseMask)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireCube(bounds.center, bounds.size * 1.1f);
+        }
     }
 
     void OnDrawGizmosSelected()
@@ -289,25 +468,21 @@ public class RevealableObject : MonoBehaviour
         Vector3 labelPos = bounds.center + Vector3.up * (bounds.size.y * 0.5f + 0.5f);
 
         #if UNITY_EDITOR
-        string filterInfo = $"Required: {requiredFilters}\nLogic: {(requireAllFilters ? "AND" : "OR")}\nRevealed: {isRevealed}\nAmount: {currentRevealAmount:F2}";
-        UnityEditor.Handles.Label(labelPos, filterInfo);
-        #endif
-    }
+        string filterInfo = $"Required: {requiredFilters}\nLogic: {(requireAllFilters ? "AND" : "OR")}\nRevealed: {isRevealed}\nAmount: {currentRevealAmount:F2}\nMode: {renderingMode}";
 
-    private Bounds GetBounds()
-    {
-        Bounds bounds = new Bounds(transform.position, Vector3.one);
-
-        if (renderers.Length > 0)
+        if (renderingMode == RevealRenderingMode.PreciseMask)
         {
-            bounds = renderers[0].bounds;
-            foreach (Renderer renderer in renderers)
+            filterInfo += $"\nMask Resolution: {maskResolution}";
+            filterInfo += $"\nMask LOD: {enableMaskLOD}";
+
+            if (maskRenderer != null)
             {
-                bounds.Encapsulate(renderer.bounds);
+                filterInfo += $"\nMask Active: {maskRenderer.IsMaskingEnabled}";
             }
         }
 
-        return bounds;
+        UnityEditor.Handles.Label(labelPos, filterInfo);
+        #endif
     }
 
     #endregion
