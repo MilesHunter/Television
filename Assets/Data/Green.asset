@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94dfb28f0ec617948b88e2d5fd2b183f, type: 3}
+  m_Name: Green
+  m_EditorClassIdentifier: 
+  filterType: 4
+  filterColor: {r: 0, g: 1, b: 0, a: 1}
+  filterRadius: 2
+  filterVisualPrefab: {fileID: 8274806590542864915, guid: eda66206ef1194a4985279e89aed5a4d, type: 3}
+  filterParticles: {fileID: 0}
+  pickupSound: {fileID: 0}
+  activateSound: {fileID: 0}

@@ -1,0 +1,153 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\UnityProject\\Television\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|g:\\unityproject\\television\\assets\\script\\filtercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\filtercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|G:\\UnityProject\\Television\\assets\\script\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|G:\\UnityProject\\Television\\assets\\script\\filtersystemmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\filtersystemmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|G:\\UnityProject\\Television\\assets\\script\\savemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\savemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|G:\\UnityProject\\Television\\assets\\script\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|G:\\UnityProject\\Television\\assets\\script\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|G:\\UnityProject\\Television\\assets\\script\\filtereffectdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8FBCCC-9524-99A6-2EED-7C3FB4329938}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\filtereffectdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|G:\\UnityProject\\Television\\assets\\shader\\mask.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\shader\\mask.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SaveManager.cs",
+              "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\SaveManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\SaveManager.cs",
+              "ToolTip": "G:\\UnityProject\\Television\\Assets\\Script\\SaveManager.cs",
+              "RelativeToolTip": "Assets\\Script\\SaveManager.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAywDoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T21:19:02.925Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UIManager.cs",
+              "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\UIManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\UIManager.cs",
+              "ToolTip": "G:\\UnityProject\\Television\\Assets\\Script\\UIManager.cs",
+              "RelativeToolTip": "Assets\\Script\\UIManager.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAgwLgAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T21:12:17.761Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FilterController.cs",
+              "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\FilterController.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\FilterController.cs",
+              "ToolTip": "G:\\UnityProject\\Television\\Assets\\Script\\FilterController.cs",
+              "RelativeToolTip": "Assets\\Script\\FilterController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T16:49:33.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FilterEffectData.cs",
+              "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\FilterEffectData.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\FilterEffectData.cs",
+              "ToolTip": "G:\\UnityProject\\Television\\Assets\\Script\\FilterEffectData.cs",
+              "RelativeToolTip": "Assets\\Script\\FilterEffectData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T16:49:32.387Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FilterSystemManager.cs",
+              "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\FilterSystemManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\FilterSystemManager.cs",
+              "ToolTip": "G:\\UnityProject\\Television\\Assets\\Script\\FilterSystemManager.cs",
+              "RelativeToolTip": "Assets\\Script\\FilterSystemManager.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAIwCcAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T16:49:30.704Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GameManager.cs",
+              "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\GameManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\GameManager.cs",
+              "ToolTip": "G:\\UnityProject\\Television\\Assets\\Script\\GameManager.cs",
+              "RelativeToolTip": "Assets\\Script\\GameManager.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T16:49:28.056Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlayerController.cs",
+              "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Script\\PlayerController.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\PlayerController.cs",
+              "ToolTip": "G:\\UnityProject\\Television\\Assets\\Script\\PlayerController.cs",
+              "RelativeToolTip": "Assets\\Script\\PlayerController.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T15:36:02.78Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Mask.shader",
+              "DocumentMoniker": "G:\\UnityProject\\Television\\Assets\\Shader\\Mask.shader",
+              "RelativeDocumentMoniker": "Assets\\Shader\\Mask.shader",
+              "ToolTip": "G:\\UnityProject\\Television\\Assets\\Shader\\Mask.shader",
+              "RelativeToolTip": "Assets\\Shader\\Mask.shader",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
+              "WhenOpened": "2026-01-30T15:13:51.235Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
