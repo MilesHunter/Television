@@ -91,7 +91,7 @@ public class FilterSystemPerformanceOptimizer : MonoBehaviour
         }
 
         // 内存数据
-        float memoryMB = Profiler.GetTotalAllocatedMemory(false) / (1024f * 1024f);
+        float memoryMB = Profiler.GetTotalAllocatedMemory() / (1024f * 1024f);
         memoryHistory.Enqueue(memoryMB);
         if (memoryHistory.Count > performanceHistorySize)
         {
@@ -349,7 +349,7 @@ public class FilterSystemPerformanceOptimizer : MonoBehaviour
 
         // 显示性能信息
         float currentFPS = 1.0f / Time.deltaTime;
-        float currentMemory = Profiler.GetTotalAllocatedMemory(false) / (1024f * 1024f);
+        float currentMemory = Profiler.GetTotalAllocatedMemory() / (1024f * 1024f);
 
         string overlayText = $"FPS: {currentFPS:F1} (Avg: {averageFPS:F1})\n";
         overlayText += $"Memory: {currentMemory:F1} MB (Avg: {averageMemoryUsage:F1})\n";

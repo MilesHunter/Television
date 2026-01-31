@@ -313,6 +313,63 @@ public class FilterMaskRenderer : MonoBehaviour
     #region Public Methods
 
     /// <summary>
+    /// 启用/禁用遮罩渲染
+    /// </summary>
+    public void SetMaskingEnabled(bool enabled)
+    {
+        if (isMaskingEnabled == enabled)
+            return;
+
+        isMaskingEnabled = enabled;
+
+        if (enabled && enablePreciseMasking)
+        {
+            // 确保遮罩系统已初始化
+            if (maskedMaterial == null)
+            {
+                InitializeMaskingSystem();
+            }
+            else
+            {
+                // 应用遮罩材质
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.material = maskedMaterial;
+                }
+                // 强制更新遮罩
+                ForceUpdateMask();
+            }
+        }
+        else
+        {
+            // 禁用遮罩
+            DisableMasking();
+        }
+
+        if (logMaskUpdates)
+        {
+            Debug.Log($"[FilterMaskRenderer] Masking {(enabled ? "enabled" : "disabled")} for {gameObject.name}");
+        }
+    }
+
+    /// <summary>
+    /// 请求遮罩更新（由外部系统调用）
+    /// </summary>
+    public void RequestMaskUpdate()
+    {
+        if (!IsMaskingEnabled)
+            return;
+
+        // 使用ForceUpdateMask来立即更新遮罩
+        ForceUpdateMask();
+
+        if (logMaskUpdates)
+        {
+            Debug.Log($"[FilterMaskRenderer] Mask update requested for {gameObject.name}");
+        }
+    }
+
+    /// <summary>
     /// 启用/禁用精确遮罩
     /// </summary>
     public void SetPreciseMaskingEnabled(bool enabled)
@@ -436,7 +493,7 @@ public class FilterMaskRenderer : MonoBehaviour
         {
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, lodDistance1);
-            Gizmos.color = Color.orange;
+            Gizmos.color = new Color(1f, 0.5f, 0f, 1f); // Orange color
             Gizmos.DrawWireSphere(transform.position, lodDistance2);
         }
     }

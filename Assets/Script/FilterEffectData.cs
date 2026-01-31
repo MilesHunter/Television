@@ -1,17 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public enum FilterType
-{
-    Red = 1,
-    Blue = 2,
-    Green = 4,
-    Yellow = 8,
-    Purple = 16,
-    // 可以继续添加，使用2的幂次方便于位运算
-}
-
 [CreateAssetMenu(fileName = "FilterEffect", menuName = "Game/FilterEffect")]
 public class FilterEffectData : ScriptableObject
 {

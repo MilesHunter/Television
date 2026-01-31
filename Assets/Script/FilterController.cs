@@ -13,7 +13,11 @@ public class FilterController : MonoBehaviour
     public ParticleSystem filterParticles;
 
     // Properties
-    public FilterEffectData FilterData => filterData;
+    public FilterEffectData FilterData
+    {
+        get => filterData;
+        set => filterData = value;
+    }
     public bool IsActive => isActive && gameObject.activeInHierarchy;
     public bool IsBeingCarried { get; private set; }
 
@@ -25,6 +29,10 @@ public class FilterController : MonoBehaviour
     // Pickup state
     private Transform originalParent;
     private Vector3 originalScale;
+
+    // Position tracking for real-time updates
+    private Vector3 lastKnownPosition;
+    private float positionChangeThreshold = 0.01f;
 
     void Awake()
     {
@@ -43,6 +51,9 @@ public class FilterController : MonoBehaviour
 
     void Start()
     {
+        // Initialize position tracking
+        lastKnownPosition = transform.position;
+
         // Register with filter system
         if (FilterSystemManager.Instance != null)
         {
@@ -250,6 +261,22 @@ public class FilterController : MonoBehaviour
         {
             audioSource.PlayOneShot(clip);
         }
+    }
+
+    #endregion
+
+    #region Position Tracking
+
+    public bool HasPositionChanged()
+    {
+        Vector3 currentPosition = transform.position;
+        float distance = Vector3.Distance(currentPosition, lastKnownPosition);
+        return distance > positionChangeThreshold;
+    }
+
+    public void ResetPositionTracking()
+    {
+        lastKnownPosition = transform.position;
     }
 
     #endregion

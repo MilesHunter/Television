@@ -322,11 +322,10 @@ public class FilterSystemIntegrationTest : MonoBehaviour
         testFilter = filterObj.AddComponent<FilterController>();
 
         // 设置基本属性
-        testFilter.FilterData = new FilterData
-        {
-            filterType = FilterType.Red,
-            filterRadius = 2.0f
-        };
+        FilterEffectData filterData = ScriptableObject.CreateInstance<FilterEffectData>();
+        filterData.filterType = FilterType.Red;
+        filterData.filterRadius = 2.0f;
+        testFilter.FilterData = filterData;
 
         LogTest("✓ Test filter created");
         yield return null;
@@ -342,7 +341,7 @@ public class FilterSystemIntegrationTest : MonoBehaviour
 
         // 添加RevealableObject组件
         RevealableObject revealable = testObjectWithMask.AddComponent<RevealableObject>();
-        revealable.requiredFilters = (int)FilterType.Red;
+        revealable.SetRequiredFilters(FilterType.Red);
 
         // 添加FilterMaskRenderer组件
         FilterMaskRenderer maskRenderer = testObjectWithMask.AddComponent<FilterMaskRenderer>();
