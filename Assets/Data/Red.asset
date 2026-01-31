@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94dfb28f0ec617948b88e2d5fd2b183f, type: 3}
   m_Name: Red
   m_EditorClassIdentifier: 
-  filterType: 0
+  filterType: 1
   filterColor: {r: 1, g: 0, b: 0, a: 0.3529412}
-  filterRadius: 2
+  filterRadius: 3
   filterVisualPrefab: {fileID: 5418161775059417041, guid: 7f256f5e6a6e0a648a3f06deed73cfeb, type: 3}
   filterParticles: {fileID: 0}
   pickupSound: {fileID: 0}

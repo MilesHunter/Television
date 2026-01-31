@@ -23,7 +23,7 @@ public class FilterController : MonoBehaviour
 
     // Components
     private Rigidbody2D rb;
-    private Collider2D col;
+    private Collider2D pickupCollider; // Optional collider for pickup mechanics
     private AudioSource audioSource;
 
     // Pickup state
@@ -38,7 +38,7 @@ public class FilterController : MonoBehaviour
     {
         // Get components
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
+        pickupCollider = GetComponent<Collider2D>();
         audioSource = GetComponent<AudioSource>();
 
         // Store original state
@@ -96,11 +96,8 @@ public class FilterController : MonoBehaviour
             effectArea.isTrigger = true;
         }
 
-        // Setup rigidbody if not present
-        if (rb == null)
-        {
-            rb = gameObject.AddComponent<Rigidbody2D>();
-        }
+        // Rigidbody2D is now optional - only get if already exists
+        // (Removed automatic creation to avoid unwanted physics)
 
         // Setup audio source
         if (audioSource == null)
@@ -154,10 +151,10 @@ public class FilterController : MonoBehaviour
             rb.isKinematic = true;
         }
 
-        // Make collider a trigger
-        if (col != null)
+        // Make pickup collider a trigger (if exists)
+        if (pickupCollider != null)
         {
-            col.isTrigger = true;
+            pickupCollider.isTrigger = true;
         }
 
         // Set parent to carrier
@@ -184,10 +181,10 @@ public class FilterController : MonoBehaviour
             rb.isKinematic = false;
         }
 
-        // Restore collider
-        if (col != null)
+        // Restore pickup collider (if exists)
+        if (pickupCollider != null)
         {
-            col.isTrigger = false;
+            pickupCollider.isTrigger = false;
         }
 
         // Reset parent
